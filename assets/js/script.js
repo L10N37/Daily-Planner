@@ -3,12 +3,12 @@ let dateAsString = dayjs().toString();
 let y= document.createElement("p");
 y.className= "lead";
 y.id="currentDay";
-dayjs().day() // gets day of current week
 y.innerHTML = dateAsString.slice(0,11);
 getID("headerID").appendChild(y);
 
 // This returns the current hour of the day (using Day.js), perfect!
 console.log("Current hour of the Day: "+ dayjs().hour());
+
 /*  
 Grading requirements:
 The "past" class adds a gray background color
@@ -18,17 +18,33 @@ The container for the time blocks is  <div class="container-fluid px-5">
 Hours shown are of a standard business day, 9am to 5pm.
 */
 
-
+const hoursText = ['9AM','10AM','11AM','12PM','1PM','2PM','3PM','4PM','5PM'];
 const hoursOfBusinessDay = ['hour-9','hour-10','hour-11','hour-12','hour-13','hour-14','hour-15','hour-16','hour-17'];
 // roll out the timeblocks and color code them according to the current hour of day
+
+// using 'x' where index starting at 'zero' is required, index on for loop adjusted for time tense calc.
+// otherwise need to run it through a huge if else or switch statement for conversion
+let x = 0;
 for (let i= 9; i!=18; i++) {
   // pass the setTimeTense function the for loops current index to compare against current hour of day
   // for colour coding
-  createTimeBlock("div",hoursOfBusinessDay[i],"row time-block " + setTimeTense(i)) 
-  console.log(i);
+  createTimeBlock("div",hoursOfBusinessDay[x],"row time-block " + setTimeTense(i)) 
+  // roll out the divs inner stuff
+  let innerAppend = getID(hoursOfBusinessDay[x]);
+  let innerCreate= document.createElement("div");
+  innerCreate.className= "col-2 col-md-1 hour text-center py-3";
+  innerCreate.innerText= hoursText[x];
+  innerAppend.appendChild(innerCreate);
+  x++;
 }
+x= 0;
 
-
+function createTimeBlock(elementName,elementID,elementClass){
+  let create= document.createElement(elementName);
+  create.id= elementID;
+  create.className= elementClass;
+  getID("timeBlockContainer").appendChild(create);
+  }
 
 /*      <!-- Example of a past time block. The "past" class adds a gray background color. -->
 
@@ -46,7 +62,6 @@ for (let i= 9; i!=18; i++) {
 
       </div>
 */
-
 
 $(function () {
   // TODO: Add a listener for click events on the save button. This code should
@@ -69,25 +84,10 @@ $(function () {
   // TODO: Add code to display the current date in the header of the page.
 });
 
-function getID(ID){
-  return document.getElementById(ID);
-}
-
-function getClass(className){
-  return document.querySelector("."+className);
-}
-
-function createTimeBlock(elementName,elementID,elementClass, hoursOfBusinessDay){
-let create= document.createElement(elementName);
-create.id= elementID;
-create.className= elementClass;
-getID("timeBlockContainer").appendChild(create);
-
-}
-
 // calculates whether the timeblock is in the past, present or future and returns the appropriate 
 // class name to colour code the time block
 // pastPresentorFuture variable is == index of the for loop above rolling out the time blocks
+
 function setTimeTense(pastPresentOrFuture){
 let currentHour = dayjs().hour();
 // past
@@ -96,4 +96,12 @@ if (currentHour > pastPresentOrFuture) return "past";
 else if (currentHour < pastPresentOrFuture) return "future";
 // current
 else if (currentHour == pastPresentOrFuture) return "present";
+}
+
+function getID(ID){
+  return document.getElementById(ID);
+}
+
+function getClass(className){
+  return document.querySelector("."+className);
 }
