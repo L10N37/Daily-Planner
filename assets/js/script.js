@@ -29,12 +29,34 @@ for (let i= 9; i!=18; i++) {
   // pass the setTimeTense function the for loops current index to compare against current hour of day
   // for colour coding
   createTimeBlock("div",hoursOfBusinessDay[x],"row time-block " + setTimeTense(i)) 
-  // roll out the divs inner stuff
+  // roll out the divs inner stuff!
+  // Hours of day
   let innerAppend = getID(hoursOfBusinessDay[x]);
   let innerCreate= document.createElement("div");
   innerCreate.className= "col-2 col-md-1 hour text-center py-3";
   innerCreate.innerText= hoursText[x];
   innerAppend.appendChild(innerCreate);
+  // text input areas
+  innerCreate= document.createElement("textarea");
+  innerCreate.className= "col-8 col-md-10 description";
+  innerCreate.rows="3";
+  innerAppend.appendChild(innerCreate);
+  // button
+  innerCreate= document.createElement("button");
+  innerCreate.className= "temp";
+  innerCreate.arialabel="save";
+  innerAppend.appendChild(innerCreate);
+  // button inner
+  innerAppend = getClass("temp");
+  innerCreate= document.createElement("i");
+  innerCreate.className= "fas fa-save";
+  innerCreate.ariahidden="true";
+  console.log(innerAppend);
+  innerAppend.appendChild(innerCreate);
+  // a work around where we remove temp class and assign it's proper class here
+  // likely other methods, but this works (or we get 9 save buttons in the 9am time slot)
+  let k = getClass("temp");
+  k.className="btn saveBtn col-2 col-md-1";
   x++;
 }
 x= 0;
@@ -83,6 +105,9 @@ $(function () {
   //
   // TODO: Add code to display the current date in the header of the page.
 });
+
+
+
 
 // calculates whether the timeblock is in the past, present or future and returns the appropriate 
 // class name to colour code the time block
