@@ -25,24 +25,21 @@ const hoursOfBusinessDay = ['hour-9','hour-10','hour-11','hour-12','hour-13','ho
 const localStorageKeys = ['key1','key2','key3','key4','key5','key6','key7','key8','key9'];
 // roll out the timeblocks and color code them according to the current hour of day
 
-// using 'x' where index starting at 'zero' is required, index on for loop adjusted for time tense calc.
-// otherwise need to run it through a huge if else or switch statement for conversion
-let x = 0;
-for (let i= 9; i!=18; i++) {
+for (let i= 0; i<9; i++) {
   // pass the setTimeTense function the for loops current index to compare against current hour of day
   // for colour coding
-  createTimeBlock("div",hoursOfBusinessDay[x],"row time-block " + setTimeTense(i)) 
+  createTimeBlock("div",hoursOfBusinessDay[i],"row time-block " + setTimeTense(i+9)) 
   // roll out the divs inner stuff!
   // Hours of day
-  let innerAppend = getID(hoursOfBusinessDay[x]);
+  let innerAppend = getID(hoursOfBusinessDay[i]);
     let innerCreate= document.createElement("div");
       innerCreate.className= "col-2 col-md-1 hour text-center py-3";
-       innerCreate.innerText= hoursText[x];
+       innerCreate.innerText= hoursText[i];
         innerAppend.appendChild(innerCreate);
   // text input areas
   innerCreate= document.createElement("textarea");
     innerCreate.className= "col-8 col-md-10 description";
-      innerCreate.id= textEntryIDs[x];
+      innerCreate.id= textEntryIDs[i];
         innerCreate.rows="3";
           innerAppend.appendChild(innerCreate);
   // button
@@ -60,9 +57,7 @@ for (let i= 9; i!=18; i++) {
     // likely other methods, but this works (or we get 9 save buttons in the 9am time slot)
     let k = getClass("temp");
       k.className="btn saveBtn col-2 col-md-1";
-        x++;
 }
-x= 0;
 
 // input text array declaration (one array element for text entry per hour of business day)
 let inputText =[];
@@ -100,10 +95,11 @@ function createTimeBlock(elementName,elementID,elementClass){
 
 // calculates whether the timeblock is in the past, present or future and returns the appropriate 
 // class name to colour code the time block
-// pastPresentorFuture variable is == index of the for loop above rolling out the time blocks
+// pastPresentorFuture variable is == index of the for loop above rolling out the time blocks + 9
 function setTimeTense(pastPresentOrFuture){
   let currentHour = dayjs().hour();
   // past
+  console.group(pastPresentOrFuture);
   if (currentHour > pastPresentOrFuture) return "past";
     // future
     else if (currentHour < pastPresentOrFuture) return "future";
