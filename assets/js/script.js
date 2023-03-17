@@ -88,8 +88,6 @@ document.querySelectorAll('.saveBtn').forEach(item => {
     for (let i = 0; i < 9; i++) {
       localStorage.setItem(localStorageKeys[i], JSON.stringify(inputText[i]));
       }
-  // test with console, just 9am entry should do
-  console.log(localStorage.getItem(localStorageKeys[0]));
   })
 })
 
