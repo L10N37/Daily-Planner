@@ -66,11 +66,7 @@ x= 0;
 
 // input text array declaration (one array element for text entry per hour of business day)
 let inputText =[];
-  // now we roll out our local storage into the array (if it exists)
-  for (let i = 0; i < 9; i++) {
-    inputText[i]= localStorage.getItem(localStorageKeys[i]);
-    }
-// now set the input text to what was previously entered (if anything)
+// roll out previous entries into the text input area/s
   let previousEntries;
     for (let i = 0; i < 9; i++) {
       let a = getID(textEntryIDs[i]).value= localStorage.getItem(localStorageKeys[i]);
