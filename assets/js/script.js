@@ -19,7 +19,10 @@ Hours shown are of a standard business day, 9am to 5pm.
 */
 
 const hoursText = ['9AM','10AM','11AM','12PM','1PM','2PM','3PM','4PM','5PM'];
+const textEntryIDs = ['hour-9-entry','hour-10-entry','hour-11-entry','hour-12-entry',
+'hour-13-entry','hour-14-entry','hour-15-entry','hour-16-entry','hour-17-entry'];
 const hoursOfBusinessDay = ['hour-9','hour-10','hour-11','hour-12','hour-13','hour-14','hour-15','hour-16','hour-17'];
+const localStorageKeys = ['key1','key2','key3','key4','key5','key6','key7','key8','key9'];
 // roll out the timeblocks and color code them according to the current hour of day
 
 // using 'x' where index starting at 'zero' is required, index on for loop adjusted for time tense calc.
@@ -39,6 +42,7 @@ for (let i= 9; i!=18; i++) {
   // text input areas
   innerCreate= document.createElement("textarea");
   innerCreate.className= "col-8 col-md-10 description";
+  innerCreate.id= textEntryIDs[x];
   innerCreate.rows="3";
   innerAppend.appendChild(innerCreate);
   // button
@@ -51,7 +55,6 @@ for (let i= 9; i!=18; i++) {
   innerCreate= document.createElement("i");
   innerCreate.className= "fas fa-save";
   innerCreate.ariahidden="true";
-  console.log(innerAppend);
   innerAppend.appendChild(innerCreate);
   // a work around where we remove temp class and assign it's proper class here
   // likely other methods, but this works (or we get 9 save buttons in the 9am time slot)
@@ -61,19 +64,43 @@ for (let i= 9; i!=18; i++) {
 }
 x= 0;
 
+// input text array declaration (one array element for text entry per hour of business day)
+let inputText =[];
+// now we roll out our local storage into the array (if it exists)
+for (let i = 0; i < 9; i++) {
+  inputText[i]= localStorage.getItem(localStorageKeys[i]);
+}
+// now set the input text to what was previously entered (if anything)
+let previousEntries;
+for (let i = 0; i < 9; i++) {
+  previousEntries= localStorage.getItem(localStorageKeys[i]);
+  previousEntries = previousEntries.replace(/\"|'/g, '');
+  getID(textEntryIDs[i]).value= previousEntries;
+}
+// click event listener on save button/s
+document.querySelectorAll('.saveBtn').forEach(item => {
+  item.addEventListener('click', event => {
+    // input text capture array assignment (on click)
+    for (let i = 0; i < 9; i++) {
+      inputText[i] = getID(textEntryIDs[i]).value;
+      }
+  // test with console
+  console.log(inputText);
+  // Now transfer the array to local storage
+    for (let i = 0; i < 9; i++) {
+      localStorage.setItem(localStorageKeys[i], JSON.stringify(inputText[i]));
+      }
+  // test with console, just 9am entry should do
+  console.log(localStorage.getItem(localStorageKeys[0]));
+  })
+})
+
 function createTimeBlock(elementName,elementID,elementClass){
   let create= document.createElement(elementName);
   create.id= elementID;
   create.className= elementClass;
   getID("timeBlockContainer").appendChild(create);
   }
-
-
-document.querySelectorAll('.saveBtn').forEach(item => {
-  item.addEventListener('click', event => {
-    console.log("save button clicked!")
-  })
-})
 
 // calculates whether the timeblock is in the past, present or future and returns the appropriate 
 // class name to colour code the time block
