@@ -35,48 +35,48 @@ for (let i= 9; i!=18; i++) {
   // roll out the divs inner stuff!
   // Hours of day
   let innerAppend = getID(hoursOfBusinessDay[x]);
-  let innerCreate= document.createElement("div");
-  innerCreate.className= "col-2 col-md-1 hour text-center py-3";
-  innerCreate.innerText= hoursText[x];
-  innerAppend.appendChild(innerCreate);
+    let innerCreate= document.createElement("div");
+      innerCreate.className= "col-2 col-md-1 hour text-center py-3";
+       innerCreate.innerText= hoursText[x];
+        innerAppend.appendChild(innerCreate);
   // text input areas
   innerCreate= document.createElement("textarea");
-  innerCreate.className= "col-8 col-md-10 description";
-  innerCreate.id= textEntryIDs[x];
-  innerCreate.rows="3";
-  innerAppend.appendChild(innerCreate);
+    innerCreate.className= "col-8 col-md-10 description";
+      innerCreate.id= textEntryIDs[x];
+        innerCreate.rows="3";
+          innerAppend.appendChild(innerCreate);
   // button
   innerCreate= document.createElement("button");
-  innerCreate.className= "temp";
-  innerCreate.arialabel="save";
-  innerAppend.appendChild(innerCreate);
+    innerCreate.className= "temp";
+      innerCreate.arialabel="save";
+        innerAppend.appendChild(innerCreate);
   // button inner
   innerAppend = getClass("temp");
-  innerCreate= document.createElement("i");
-  innerCreate.className= "fas fa-save";
-  innerCreate.ariahidden="true";
-  innerAppend.appendChild(innerCreate);
-  // a work around where we remove temp class and assign it's proper class here
-  // likely other methods, but this works (or we get 9 save buttons in the 9am time slot)
-  let k = getClass("temp");
-  k.className="btn saveBtn col-2 col-md-1";
-  x++;
+    innerCreate= document.createElement("i");
+      innerCreate.className= "fas fa-save";
+        innerCreate.ariahidden="true";
+          innerAppend.appendChild(innerCreate);
+    // a work around where we remove temp class and assign it's proper class here
+    // likely other methods, but this works (or we get 9 save buttons in the 9am time slot)
+    let k = getClass("temp");
+      k.className="btn saveBtn col-2 col-md-1";
+        x++;
 }
 x= 0;
 
 // input text array declaration (one array element for text entry per hour of business day)
 let inputText =[];
-// now we roll out our local storage into the array (if it exists)
-for (let i = 0; i < 9; i++) {
-  inputText[i]= localStorage.getItem(localStorageKeys[i]);
-}
+  // now we roll out our local storage into the array (if it exists)
+  for (let i = 0; i < 9; i++) {
+    inputText[i]= localStorage.getItem(localStorageKeys[i]);
+    }
 // now set the input text to what was previously entered (if anything)
-let previousEntries;
-for (let i = 0; i < 9; i++) {
-  previousEntries= localStorage.getItem(localStorageKeys[i]);
-  previousEntries = previousEntries.replace(/\"|'/g, '');
-  getID(textEntryIDs[i]).value= previousEntries;
-}
+  let previousEntries;
+    for (let i = 0; i < 9; i++) {
+      previousEntries= localStorage.getItem(localStorageKeys[i]);
+        previousEntries = previousEntries.replace(/['"]+/g, '');
+          getID(textEntryIDs[i]).value= previousEntries;
+          }
 // click event listener on save button/s
 document.querySelectorAll('.saveBtn').forEach(item => {
   item.addEventListener('click', event => {
@@ -96,24 +96,24 @@ document.querySelectorAll('.saveBtn').forEach(item => {
 })
 
 function createTimeBlock(elementName,elementID,elementClass){
-  let create= document.createElement(elementName);
-  create.id= elementID;
-  create.className= elementClass;
-  getID("timeBlockContainer").appendChild(create);
-  }
+    let create= document.createElement(elementName);
+      create.id= elementID;
+        create.className= elementClass;
+          getID("timeBlockContainer").appendChild(create);
+          }
 
 // calculates whether the timeblock is in the past, present or future and returns the appropriate 
 // class name to colour code the time block
 // pastPresentorFuture variable is == index of the for loop above rolling out the time blocks
 function setTimeTense(pastPresentOrFuture){
-let currentHour = dayjs().hour();
-// past
-if (currentHour > pastPresentOrFuture) return "past";
-// future
-else if (currentHour < pastPresentOrFuture) return "future";
-// current
-else if (currentHour == pastPresentOrFuture) return "present";
-}
+  let currentHour = dayjs().hour();
+  // past
+  if (currentHour > pastPresentOrFuture) return "past";
+    // future
+    else if (currentHour < pastPresentOrFuture) return "future";
+      // current
+      else if (currentHour == pastPresentOrFuture) return "present";
+      }
 
 function getID(ID){
   return document.getElementById(ID);
