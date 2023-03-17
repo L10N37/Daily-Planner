@@ -1,7 +1,7 @@
 # Daily Planner
 <br />
 
-## Week 05 weekly challenge assignment for Monash Fullstack Bootcamp
+## Week 05 Challenge Assignment for Monash Fullstack Coding Bootcamp
 <br />
 This is a daily planner, we used starter code from https://github.com/coding-boot-camp/crispy-octo-meme
 <br />
@@ -9,15 +9,16 @@ This is a daily planner, we used starter code from https://github.com/coding-boo
 ## Usage
 <br />
 The page uses Day.js to work with date and time. 
-It wasn't really necessary for the header as we could acheive the same result with plain Javascripts date() function. It was used anyway!
+It wasn't really necessary for the header as we could achieve the same result with plain Javascripts date() function. It was used anyway!
 <br />
-The Day.js library was used to simply generate which hour of the day it was.
+The Day.js library was used to generate which hour of the day it was.
 I guess it wasn't really necessary to use Day.js for this either, but the library generated this information with a simple one liner of code.
 <br />
 
 ## Features
 <br />
-You can plan your day on this planner. It shows the current day of the week/ day of the month and month in the header. As per grading requirements and the starter code
+You can plan your day on this planner. It shows the current day of the week, day of the month and month in the header. As per grading requirements and the starter code:
+<br />
 <br />
 The "past" hours of the day are coloured grey. <br />
 The "present" hour is coloured red. <br />
