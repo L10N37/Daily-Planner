@@ -73,10 +73,12 @@ let inputText =[];
 // now set the input text to what was previously entered (if anything)
   let previousEntries;
     for (let i = 0; i < 9; i++) {
-      previousEntries= localStorage.getItem(localStorageKeys[i]);
-      let previousEntriesClean= previousEntries.replace(/['"]+/g, '');
-          getID(textEntryIDs[i]).value= previousEntriesClean;
-          }
+      let a = getID(textEntryIDs[i]).value= localStorage.getItem(localStorageKeys[i]);
+      if (a != null){
+      getID(textEntryIDs[i]).value= localStorage.getItem(localStorageKeys[i]).replace(/['"]+/g, '');
+      }
+      else getID(textEntryIDs[i]).value= localStorage.getItem(localStorageKeys[i]);
+      }
 // click event listener on save button/s
 document.querySelectorAll('.saveBtn').forEach(item => {
   item.addEventListener('click', event => {
