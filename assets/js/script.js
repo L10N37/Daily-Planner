@@ -74,8 +74,8 @@ let inputText =[];
   let previousEntries;
     for (let i = 0; i < 9; i++) {
       previousEntries= localStorage.getItem(localStorageKeys[i]);
-        previousEntries = previousEntries.replace(/['"]+/g, '');
-          getID(textEntryIDs[i]).value= previousEntries;
+      let previousEntriesClean= previousEntries.replace(/['"]+/g, '');
+          getID(textEntryIDs[i]).value= previousEntriesClean;
           }
 // click event listener on save button/s
 document.querySelectorAll('.saveBtn').forEach(item => {
