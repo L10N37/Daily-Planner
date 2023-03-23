@@ -46,7 +46,11 @@ for (let i= 0; i<9; i++) {
   innerCreate= document.createElement("button");
     innerCreate.className= "temp";
       innerCreate.arialabel="save";
-        innerAppend.appendChild(innerCreate);
+        // Revision 1: now re-using HoursText as ID's for each save button
+        // we could originally use any save button and it would save all time slot entries
+        // now each save button has a unique ID for click event stuff
+        innerCreate.id= hoursText[i]; 
+          innerAppend.appendChild(innerCreate);
   // button inner
   innerAppend = getClass("temp");
     innerCreate= document.createElement("i");
@@ -70,21 +74,25 @@ let inputText =[];
       }
       else getID(textEntryIDs[i]).value= localStorage.getItem(localStorageKeys[i]);
       }
+
 // click event listener on save button/s
-document.querySelectorAll('.saveBtn').forEach(item => {
-  item.addEventListener('click', event => {
-    // input text capture array assignment (on click)
+for (let i = 0; i < 9; i++) { 
+getID(hoursText[i]).addEventListener("click", function(event) {
+  
+    // Check which save button was clicked
+    console.log(hoursText[i]);
+
+    // assign each text area input box a variable/ an element position in array
     for (let i = 0; i < 9; i++) {
       inputText[i] = getID(textEntryIDs[i]).value;
       }
   // test with console
   console.log(inputText);
-  // Now transfer the array to local storage
-    for (let i = 0; i < 9; i++) {
+
+  // Now transfer the corresponding array element to local storage
       localStorage.setItem(localStorageKeys[i], JSON.stringify(inputText[i]));
-      }
   })
-})
+}
 
 function createTimeBlock(elementName,elementID,elementClass){
     let create= document.createElement(elementName);
@@ -99,7 +107,6 @@ function createTimeBlock(elementName,elementID,elementClass){
 function setTimeTense(pastPresentOrFuture){
   let currentHour = dayjs().hour();
   // past
-  console.group(pastPresentOrFuture);
   if (currentHour > pastPresentOrFuture) return "past";
     // future
     else if (currentHour < pastPresentOrFuture) return "future";
